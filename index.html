@@ -25,18 +25,15 @@
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
-}
-
-#titleScreen * {
-    margin-left: auto;
-    margin-right: auto;
+    position: relative; /* ← これが重要 */
 }
 
 #startButton {
-    margin-top: 40vh;
+    position: absolute;
+    top: 70%;  /* ← ボタンの縦位置。ここを調整すればOK */
+    left: 50%;
+    transform: translateX(-50%);
     display: block;
-    margin-left: auto;
-    margin-right: auto;
     width: fit-content;
 }
 
