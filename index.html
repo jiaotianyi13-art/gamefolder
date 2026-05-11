@@ -134,7 +134,7 @@
 
 <script>
 // ===============================
-// ★ あなたのストーリー完全復元（A/B/C 全ルート）
+// ★ ストーリー完全復元（A/B/C 全ルート）
 // ===============================
 const scenes = {
     start: {
@@ -147,7 +147,6 @@ const scenes = {
         },
         next: { A: "A1", B: "B1", C: "C1" }
     },
-
     /* ===== Aルート ===== */
     A1: {
         text: "青い光の中、妖精が現れた。「心の強さを示しなさい」",
@@ -345,7 +344,6 @@ const scenes = {
         next: { restart: "start" }
     }
 };
-
 // ===============================
 // タイトル → ゲーム開始
 // ===============================
@@ -363,7 +361,7 @@ document.getElementById("startButton").onclick = () => {
 function typeWriter(text, element, callback) {
     let i = 0;
     element.textContent = "";
-    let speed = 20; // 高速
+    let speed = 20;
 
     function type() {
         if (i < text.length) {
@@ -375,7 +373,6 @@ function typeWriter(text, element, callback) {
         }
     }
 
-    // クリックで全文表示
     element.onclick = () => {
         element.textContent = text;
         callback();
@@ -395,13 +392,11 @@ function render(sceneName) {
     const choicesArea = document.getElementById("choicesArea");
     const img = document.getElementById("sceneImage");
 
-    // フェードアウト → フェードイン
     gameBox.style.opacity = 0;
     setTimeout(() => {
         gameBox.style.opacity = 1;
     }, 200);
 
-    // 画像ふわっと
     if (scene.image) {
         img.src = scene.image;
         img.style.display = "block";
@@ -415,12 +410,9 @@ function render(sceneName) {
         img.style.display = "none";
     }
 
-    // 選択肢を一旦消す
     choicesArea.innerHTML = "";
 
-    // タイプライター開始
     typeWriter(scene.text, textArea, () => {
-        // タイプ終了後に選択肢をふわっと表示
         for (const key in scene.choices) {
             const btn = document.createElement("div");
             btn.className = "choice";
@@ -428,7 +420,6 @@ function render(sceneName) {
             btn.onclick = () => render(scene.next[key]);
             choicesArea.appendChild(btn);
 
-            // ふわっと
             setTimeout(() => {
                 btn.style.opacity = 1;
                 btn.style.transform = "translateY(0)";
