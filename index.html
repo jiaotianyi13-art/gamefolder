@@ -20,14 +20,26 @@
         100% { background-color: #222; }
     }
 
-    #titleScreen * {
-        margin-left: 40vh;
-        margin-right: auto;
-        width: fit-content;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        /* display: none; ← これを削除！ */
+    #titleScreen {
+    background: url('title.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+#titleScreen * {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+#startButton {
+    margin-top: 40vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
 }
 
 #startButton {
