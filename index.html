@@ -23,9 +23,6 @@
         padding-top: 200px;
         color: white;
         text-shadow: 0 0 10px black;
-
-        position: relative;
-        z-index: 10;
     }
     #startButton {
         font-size: 28px;
@@ -49,9 +46,6 @@
         padding: 20px;
         border-radius: 10px;
         display: none;
-
-        position: relative;
-        z-index: 1;
     }
     #sceneImage {
         width: 100%;
@@ -89,9 +83,6 @@
         #titleScreen {
             padding-top: 120px;
         }
-        #titleScreen h1 {
-            font-size: 28px;
-        }
         #startButton {
             font-size: 20px;
             padding: 12px 30px;
@@ -125,19 +116,21 @@
 
 <script>
 // ===============================
-// 長編ストーリー シーンデータ
+// シーンデータ（A・B・Cルート全部入り）
 // ===============================
 const scenes = {
     start: {
-        text: "あなたは霧の森に足を踏み入れた。王国からの任務は《蒼光の宝珠》の回収だ。\n森の入口には二つの道がある。",
+        text: "あなたは霧の森に足を踏み入れた。王国からの任務は《蒼光の宝珠》の回収だ。\n森の入口には三つの道がある。",
         image: "forest.jpg",
         choices: {
             A: "光るキノコが並ぶ“青い道”へ進む",
-            B: "古い石碑が立つ“黒い道”へ進む"
+            B: "古い石碑が立つ“黒い道”へ進む",
+            C: "どこからか歌声が聞こえる“第三の道”へ進む"
         },
-        next: { A: "A1", B: "B1" }
+        next: { A: "A1", B: "B1", C: "C1" }
     },
 
+    // ===== Aルート =====
     A1: {
         text: "青い光の中、妖精が現れた。「心の強さを示しなさい」",
         image: "fairy.png",
@@ -161,9 +154,7 @@ const scenes = {
     A2Q: {
         text: "「宝珠は王国を守るための鍵。だが、使い方を誤れば災いを呼ぶ」",
         image: "fairy.png",
-        choices: {
-            A2Q1: "森の奥へ進む"
-        },
+        choices: { A2Q1: "森の奥へ進む" },
         next: { A2Q1: "A3" }
     },
 
@@ -200,9 +191,7 @@ const scenes = {
     A6: {
         text: "あなたは宝珠の真実を理解した。妖精は微笑む。「あなたなら託せる」\n宝珠が光り、あなたの手に収まった。",
         image: "forest.jpg",
-        choices: {
-            restart: "最初からやり直す"
-        },
+        choices: { restart: "最初からやり直す" },
         next: { restart: "start" }
     },
 
@@ -213,6 +202,7 @@ const scenes = {
         next: { restart: "start" }
     },
 
+    // ===== Bルート =====
     B1: {
         text: "石碑が光り、古代の守護者が姿を現す。「我を倒すか、知恵を示せ」",
         image: "guardian.png",
@@ -246,18 +236,14 @@ const scenes = {
     B4: {
         text: "あなたは必死に逃げたが、守護者は追ってこなかった。「弱き者よ、去るがよい」",
         image: "guardian.png",
-        choices: {
-            restart: "最初からやり直す"
-        },
+        choices: { restart: "最初からやり直す" },
         next: { restart: "start" }
     },
 
     B5: {
         text: "あなたは守護者の胸の青い核を狙った。見事に命中し、守護者は崩れ落ちた。",
         image: "guardian.png",
-        choices: {
-            B51: "宝珠を探す"
-        },
+        choices: { B51: "宝珠を探す" },
         next: { B51: "endB" }
     },
 
@@ -274,18 +260,14 @@ const scenes = {
     B7: {
         text: "右の通路は静かだった。奥には宝珠を祀る部屋があった。",
         image: "ruins.png",
-        choices: {
-            B71: "宝珠を取る"
-        },
+        choices: { B71: "宝珠を取る" },
         next: { B71: "endC" }
     },
 
     B8: {
         text: "罠を解除すると、壁が開き宝珠が姿を現した。",
         image: "ruins.png",
-        choices: {
-            B81: "宝珠を取る"
-        },
+        choices: { B81: "宝珠を取る" },
         next: { B81: "endC" }
     },
 
@@ -308,6 +290,41 @@ const scenes = {
         image: "trap.png",
         choices: { restart: "最初からやり直す" },
         next: { restart: "start" }
+    },
+
+    // ===== Cルート（新ルート） =====
+    C1: {
+        text: "霧の奥から不思議な歌声が聞こえる。青でも黒でもない、第三の道が現れていた。",
+        image: "mystic_path.png",
+        choices: {
+            C11: "歌声の方へ進む",
+            C12: "怖いので戻る"
+        },
+        next: { C11: "C2", C12: "start" }
+    },
+
+    C2: {
+        text: "歌声の主は、森に封じられた古代の精霊だった。「助けを求めているのか？」",
+        image: "spirit.png",
+        choices: {
+            C21: "助ける",
+            C22: "戦う"
+        },
+        next: { C21: "C3", C22: "C4" }
+    },
+
+    C3: {
+        text: "あなたは精霊を解放した。森は静かに光り、宝珠の真の力が目覚める。\n=== エンディングC：精霊解放ルート ===",
+        image: "forest_light.png",
+        choices: { restart: "最初からやり直す" },
+        next: { restart: "start" }
+    },
+
+    C4: {
+        text: "精霊は怒り狂い、森全体が敵となった。\n=== バッドエンドC ===",
+        image: "forest_dark.png",
+        choices: { restart: "最初からやり直す" },
+        next: { restart: "start" }
     }
 };
 
@@ -321,7 +338,7 @@ document.getElementById("startButton").onclick = () => {
 };
 
 // ===============================
-// シーン描画（フェードつき）
+// シーン描画
 // ===============================
 function render(sceneName) {
     const scene = scenes[sceneName];
@@ -357,4 +374,3 @@ function render(sceneName) {
 
 </body>
 </html>
-
