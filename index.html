@@ -14,14 +14,12 @@
         animation: bgPulse 6s ease-in-out infinite;
     }
 
-    /* 背景が淡く光るパルス */
     @keyframes bgPulse {
         0% { background-color: #222; }
         50% { background-color: #2a2a2a; }
         100% { background-color: #222; }
     }
 
-    /* タイトル画面 */
     #titleScreen {
         text-align: center;
         background: url('title.png');
@@ -42,11 +40,7 @@
         display: inline-block;
         margin-top: 40px;
     }
-    #startButton:hover {
-        background: rgba(255,255,255,0.3);
-    }
 
-    /* ゲーム画面 */
     #game {
         width: 100%;
         max-width: 650px;
@@ -59,7 +53,6 @@
         transition: opacity 0.8s ease;
     }
 
-    /* 画像ふわっと */
     #sceneImage {
         width: 100%;
         border-radius: 10px;
@@ -70,7 +63,6 @@
         transition: opacity 1s ease, transform 1s ease;
     }
 
-    /* 選択肢 */
     .choice {
         background: #555;
         padding: 16px;
@@ -82,50 +74,21 @@
         transform: translateY(10px);
         transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .choice:hover {
-        background: #777;
-    }
 
-    /* フェードイン */
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
-    }
-
-    /* スマホ最適化 */
-    @media (max-width: 600px) {
-        body {
-            font-size: 16px;
-            line-height: 1.8;
-        }
-        #titleScreen {
-            padding-top: 120px;
-        }
-        #startButton {
-            font-size: 20px;
-            padding: 12px 30px;
-        }
-        #game {
-            width: 90%;
-            padding: 15px;
-        }
-        .choice {
-            font-size: 18px;
-            padding: 14px;
-        }
     }
 </style>
 </head>
 
 <body>
 
-<!-- タイトル画面 -->
 <div id="titleScreen">
     <h1>霧の森と失われた宝珠</h1>
     <div id="startButton">ゲームスタート</div>
 </div>
 
-<!-- ゲーム画面 -->
 <div id="game">
     <img id="sceneImage">
     <div id="textArea"></div>
@@ -133,90 +96,88 @@
 </div>
 
 <script>
-// ===============================
-// ★ ストーリー完全復元（A/B/C 全ルート）
-// ===============================
 const scenes = {
     start: {
         text: "あなたは霧の森に足を踏み入れた。王国からの任務は《蒼光の宝珠》の回収だ。\n森の入口には三つの道がある。",
         image: "forest.jpg",
         choices: {
-            A: "光るキノコが並ぶ“青い道”へ進む",
-            B: "古い石碑が立つ“黒い道”へ進む",
-            C: "どこからか歌声が聞こえる“第三の道”へ進む"
+            start_choice1: "光るキノコが並ぶ“青い道”へ進む",
+            start_choice2: "古い石碑が立つ“黒い道”へ進む",
+            start_choice3: "どこからか歌声が聞こえる“第三の道”へ進む"
         },
-        next: { A: "A1", B: "B1", C: "C1" }
+        next: { start_choice1: "A1", start_choice2: "B1", start_choice3: "C1" }
     },
+
     /* ===== Aルート ===== */
     A1: {
         text: "青い光の中、妖精が現れた。「心の強さを示しなさい」",
         image: "fairy.png",
         choices: {
-            A1: "正直に目的を話す",
-            A2: "妖精についていく"
+            A1_choice1: "正直に目的を話す",
+            A1_choice2: "妖精についていく"
         },
-        next: { A1: "A2", A2: "A3" }
+        next: { A1_choice1: "A2", A1_choice2: "A3" }
     },
 
     A2: {
         text: "妖精はあなたの誠実さを認めた。「ならば、森の奥へ進む資格がある」",
         image: "fairy.png",
         choices: {
-            A21: "森の奥へ進む",
-            A22: "妖精に質問する"
+            A2_choice1: "森の奥へ進む",
+            A2_choice2: "妖精に質問する"
         },
-        next: { A21: "A3", A22: "A2Q" }
+        next: { A2_choice1: "A3", A2_choice2: "A2Q" }
     },
 
     A2Q: {
         text: "「宝珠は王国を守るための鍵。だが、使い方を誤れば災いを呼ぶ」",
         image: "fairy.png",
-        choices: { A2Q1: "森の奥へ進む" },
-        next: { A2Q1: "A3" }
+        choices: { A2Q_choice1: "森の奥へ進む" },
+        next: { A2Q_choice1: "A3" }
     },
 
     A3: {
         text: "妖精はあなたを森の奥へ案内した。そこには古代の祭壇があり、青い光が脈動している。",
         image: "fairy_forest.png",
         choices: {
-            A31: "祭壇に触れる",
-            A32: "周囲を調べる"
+            A3_choice1: "祭壇に触れる",
+            A3_choice2: "周囲を調べる"
         },
-        next: { A31: "A4", A32: "A5" }
+        next: { A3_choice1: "A4", A3_choice2: "A5" }
     },
 
     A4: {
         text: "祭壇に触れた瞬間、あなたの頭に古代の記憶が流れ込む。宝珠は“封印”のための道具だった。",
         image: "altar.png",
         choices: {
-            A41: "記憶を受け入れる",
-            A42: "拒絶する"
+            A4_choice1: "記憶を受け入れる",
+            A4_choice2: "拒絶する"
         },
-        next: { A41: "A6", A42: "endBadA" }
+        next: { A4_choice1: "A6", A4_choice2: "endBadA" }
     },
 
     A5: {
         text: "周囲には古代文字が刻まれていた。「宝珠は王国の未来を左右する」",
         image: "altar.png",
         choices: {
-            A51: "祭壇に触れる",
-            A52: "妖精に相談する"
+            A5_choice1: "祭壇に触れる",
+            A5_choice2: "妖精に相談する"
         },
-        next: { A51: "A4", A52: "A2Q" }
+        next: { A5_choice1: "A4", A5_choice2: "A2Q" }
     },
 
     A6: {
         text: "あなたは宝珠の真実を理解した。妖精は微笑む。「あなたなら託せる」\n宝珠が光り、あなたの手に収まった。",
         image: "forest.jpg",
-        choices: { restart: "最初からやり直す" },
-        next: { restart: "start" }
+        choices: { A6_choice1: "最初からやり直す" },
+        next: { A6_choice1: "start" }
     },
 
     endBadA: {
         text: "記憶を拒絶した瞬間、森の魔力が暴走した。あなたは霧に飲まれてしまった。\n=== バッドエンドA ===",
         image: "forest.jpg",
-        choices: { restart: "最初からやり直す" },
-        next: { restart: "start" }
+        choices: { endBadA_choice1: "最初からやり直す" },
+        next: { endBadA_choice1: "start" }
     },
 
     /* ===== Bルート ===== */
@@ -224,89 +185,89 @@ const scenes = {
         text: "石碑が光り、古代の守護者が姿を現す。「我を倒すか、知恵を示せ」",
         image: "guardian.png",
         choices: {
-            B1: "戦う",
-            B2: "知恵で挑む"
+            B1_choice1: "戦う",
+            B1_choice2: "知恵で挑む"
         },
-        next: { B1: "B2", B2: "B3" }
+        next: { B1_choice1: "B2", B1_choice2: "B3" }
     },
 
     B2: {
         text: "守護者は剣を構えた。あなたは必死に応戦するが、力では敵わない。",
         image: "guardian.png",
         choices: {
-            B21: "逃げる",
-            B22: "隙を突く"
+            B2_choice1: "逃げる",
+            B2_choice2: "隙を突く"
         },
-        next: { B21: "B4", B22: "B5" }
+        next: { B2_choice1: "B4", B2_choice2: "B5" }
     },
 
     B3: {
         text: "石碑の裏には地下へ続く階段があった。あなたは暗い迷宮へ足を踏み入れる。",
         image: "ruins.png",
         choices: {
-            B31: "左の通路へ進む",
-            B32: "右の通路へ進む"
+            B3_choice1: "左の通路へ進む",
+            B3_choice2: "右の通路へ進む"
         },
-        next: { B31: "B6", B32: "B7" }
+        next: { B3_choice1: "B6", B3_choice2: "B7" }
     },
 
     B4: {
         text: "あなたは必死に逃げたが、守護者は追ってこなかった。「弱き者よ、去るがよい」",
         image: "guardian.png",
-        choices: { restart: "最初からやり直す" },
-        next: { restart: "start" }
+        choices: { B4_choice1: "最初からやり直す" },
+        next: { B4_choice1: "start" }
     },
 
     B5: {
         text: "あなたは守護者の胸の青い核を狙った。見事に命中し、守護者は崩れ落ちた。",
         image: "guardian.png",
-        choices: { B51: "宝珠を探す" },
-        next: { B51: "endB" }
+        choices: { B5_choice1: "宝珠を探す" },
+        next: { B5_choice1: "endB" }
     },
 
     B6: {
         text: "左の通路は罠だらけだった。床が沈み、矢が飛んでくる！",
         image: "trap.png",
         choices: {
-            B61: "走り抜ける",
-            B62: "罠を解除する"
+            B6_choice1: "走り抜ける",
+            B6_choice2: "罠を解除する"
         },
-        next: { B61: "endBadB", B62: "B8" }
+        next: { B6_choice1: "endBadB", B6_choice2: "B8" }
     },
 
     B7: {
         text: "右の通路は静かだった。奥には宝珠を祀る部屋があった。",
         image: "ruins.png",
-        choices: { B71: "宝珠を取る" },
-        next: { B71: "endC" }
+        choices: { B7_choice1: "宝珠を取る" },
+        next: { B7_choice1: "endC" }
     },
 
     B8: {
         text: "罠を解除すると、壁が開き宝珠が姿を現した。",
         image: "ruins.png",
-        choices: { B81: "宝珠を取る" },
-        next: { B81: "endC" }
+        choices: { B8_choice1: "宝珠を取る" },
+        next: { B8_choice1: "endC" }
     },
 
     endB: {
         text: "激しい戦いの末、あなたは守護者を倒し宝珠を手に入れた。\n=== エンディングB：力の勝利 ===",
         image: "guardian.png",
-        choices: { restart: "最初からやり直す" },
-        next: { restart: "start" }
+        choices: { endB_choice1: "最初からやり直す" },
+        next: { endB_choice1: "start" }
     },
 
     endC: {
         text: "あなたは知恵で迷宮を突破し、宝珠を手に入れた。\n=== エンディングC：知恵の勝利 ===",
         image: "ruins.png",
-        choices: { restart: "最初からやり直す" },
-        next: { restart: "start" }
+        choices: { endC_choice1: "最初からやり直す" },
+        next: { endC_choice1: "start" }
     },
 
     endBadB: {
         text: "罠を突破できず、あなたは迷宮に倒れた。\n=== バッドエンドB ===",
         image: "trap.png",
-        choices: { restart: "最初からやり直す" },
-        next: { restart: "start" }
+        choices: { endBadB_choice1: "最初からやり直す" },
+        next: { endBadB_choice1: "start" }
     },
 
     /* ===== Cルート ===== */
@@ -314,39 +275,37 @@ const scenes = {
         text: "霧の奥から不思議な歌声が聞こえる。青でも黒でもない、第三の道が現れていた。",
         image: "mystic_path.png",
         choices: {
-            C11: "歌声の方へ進む",
-            C12: "怖いので戻る"
+            C1_choice1: "歌声の方へ進む",
+            C1_choice2: "怖いので戻る"
         },
-        next: { C11: "C2", C12: "start" }
+        next: { C1_choice1: "C2", C1_choice2: "start" }
     },
 
     C2: {
         text: "歌声の主は、森に封じられた古代の精霊だった。「助けを求めているのか？」",
         image: "spirit.png",
         choices: {
-            C21: "助ける",
-            C22: "戦う"
+            C2_choice1: "助ける",
+            C2_choice2: "戦う"
         },
-        next: { C21: "C3", C22: "C4" }
+        next: { C2_choice1: "C3", C2_choice2: "C4" }
     },
 
     C3: {
         text: "あなたは精霊を解放した。森は静かに光り、宝珠の真の力が目覚める。\n=== エンディングC：精霊解放ルート ===",
         image: "forest_light.png",
-        choices: { restart: "最初からやり直す" },
-        next: { restart: "start" }
+        choices: { C3_choice1: "最初からやり直す" },
+        next: { C3_choice1: "start" }
     },
 
     C4: {
         text: "精霊は怒り狂い、森全体が敵となった。\n=== バッドエンドC ===",
         image: "forest_dark.png",
-        choices: { restart: "最初からやり直す" },
-        next: { restart: "start" }
+        choices: { C4_choice1: "最初からやり直す" },
+        next: { C4_choice1: "start" }
     }
 };
-// ===============================
-// タイトル → ゲーム開始
-// ===============================
+
 document.getElementById("startButton").onclick = () => {
     document.getElementById("titleScreen").style.display = "none";
     const gameBox = document.getElementById("game");
@@ -355,9 +314,6 @@ document.getElementById("startButton").onclick = () => {
     render("start");
 };
 
-// ===============================
-// タイプライター演出（高速）
-// ===============================
 function typeWriter(text, element, callback) {
     let i = 0;
     element.textContent = "";
@@ -381,9 +337,6 @@ function typeWriter(text, element, callback) {
     type();
 }
 
-// ===============================
-// シーン描画
-// ===============================
 function render(sceneName) {
     const scene = scenes[sceneName];
 
